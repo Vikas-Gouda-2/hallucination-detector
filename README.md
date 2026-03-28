@@ -1,156 +1,56 @@
 # 🧠 TruthLens - AI Hallucination Detector
 
-A full-stack application that detects AI-generated hallucinations, inconsistencies, and false claims in text using advanced NLP and fact-checking techniques.
+Detects AI hallucinations and false claims in text using NLP + Gemini API.
 
-## 🎯 Features
+## 🎯 What It Does
 
-- **Real-time Hallucination Detection**: Analyze text and identify potentially false or hallucinated claims
-- **Multi-stage Pipeline**: Extract claims → Interrogate → Verify consistency
-- **Green/Yellow/Red Verdicts**: 
-  - 🟢 **Green (Verified)**: All claims are factually accurate
-  - 🟡 **Yellow (Uncertain)**: Mixed content or unverifiable claims
-  - 🔴 **Red (Hallucinated)**: Contains false or contradictory information
-- **Confidence Scoring**: Get detailed confidence levels and reasoning for each analysis
-- **NLI Model Integration**: Support for Entailment/Neutral/Contradiction classification
-- **Chrome Extension**: Browser-based scanning for web content
-- **Beautiful Dashboard**: React-based UI with real-time analytics
+- 🟢 **Green**: Verified claim
+- 🟡 **Yellow**: Uncertain content  
+- 🔴 **Red**: Hallucinated/false
 
-## 🏗️ Architecture
-
-```
-hallucination/
-├── python_backend/          # FastAPI backend server
-│   ├── main.py
-│   ├── routers/
-│   │   ├── analyze.py       # Main analysis endpoint
-│   │   ├── scans.py
-│   │   └── feedback.py
-│   ├── services/
-│   │   ├── llm_service.py   # Gemini API integration
-│   │   ├── firebase_service.py
-│   │   └── mock_data.py
-│   └── models/
-│       └── schemas.py
-├── hallucination-detector/  # React Vite frontend
-│   ├── src/
-│   │   ├── pages/
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── Demo.jsx
-│   │   │   └── Analytics.jsx
-│   │   ├── components/
-│   │   └── lib/
-│   │       └── api.js       # Axios client
-│   └── vite.config.js
-└── extension_frontend/      # Chrome extension
-    ├── manifest.json
-    ├── background.js
-    └── content.js
-```
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Python 3.8+
-- Node.js 18+
-- Google Gemini API key
-
-### Backend Setup
-
-```bash
-cd python_backend
-
-# Create virtual environment
-python3 -m venv venv
-source venv/bin/activate
-
-# Install dependencies
-pip install -r requirements.txt
-
-# Create .env file
-cp .env.example .env
-# Add your GEMINI_API_KEY to .env
-
-# Start server
-python3 -m uvicorn main:app --host 0.0.0.0 --port 8000
-```
-
-Backend will be available at: `http://localhost:8000`
-
-### Frontend Setup
-
-```bash
-cd hallucination-detector
-
-# Install dependencies
-npm install
-
-# Start dev server
-npm run dev
-```
-
-Frontend will be available at: `http://localhost:5173`
-
-## 📡 API Endpoints
-
-### Analysis
-- **POST** `/analyze` - Analyze text for hallucinations
-  ```json
-  {
-    "text": "The Earth orbits around the Sun",
-    "source_url": "optional_url",
-    "user_id": "optional_user_id"
-  }
-  ```
-
-### Health Check
-- **GET** `/health` - Server health status
-- **GET** `/config` - Configuration info (debug mode)
-
-### Scans
-- **GET** `/history/{user_id}` - Get user's scan history
-- **GET** `/scan/{scan_id}` - Get specific scan details
-
-### Feedback
-- **POST** `/feedback` - Submit feedback on analyses
-
-## 🔍 Detection Pipeline
-
-### 1. Claim Extraction
-Breaks down input text into individual claims/assertions
-
-### 2. Interrogation
-For each claim:
-- Checks against built-in fact database
-- Queries Google Gemini API for verification
-- Classifies as: **TRUE** / **FALSE** / **HALF-TRUTH** / **UNCERTAIN**
-
-### 3. Consistency Analysis
-- Aggregates all claim verdicts
-- Scores overall consistency
-- Generates human-readable reasoning
-
-## 📊 Verdict Mapping
-
-| NLI Result | Status | Color | Meaning |
-|---|---|---|---|
-| Entailment | Green | 🟢 | Supported by evidence |
-| Neutral | Yellow | 🟡 | Insufficient evidence |
-| Contradiction | Red | 🔴 | Contradicts facts |
-
-## 🔄 API Timeout
-
-Frontend waits **120 seconds** for responses to accommodate:
-- Gemini API rate limiting (free tier)
-- Exponential backoff retries (up to 3 attempts)
-- Sequential claim interrogation
-
-## 📦 Tech Stack
+## ⚡ Setup
 
 ### Backend
-- **FastAPI** - Web framework
-- **Uvicorn** - ASGI server
-- **Google Gemini 2.5 Flash** - LLM inference
-- **httpx** - Async HTTP client with retry logic
+```bash
+cd python_backend
+pip install -r requirements.txt
+python3 -m uvicorn main:app --reload --port 8000
+```
+
+### Frontend
+```bash
+cd hallucination-detector
+npm install
+npm run dev  # Runs on port 5173
+```
+
+## 📡 API
+
+```bash
+POST http://localhost:8000/analyze
+Content-Type: application/json
+
+{
+  "text": "Your claim here",
+  "source_url": "http://example.com",
+  "user_id": "user123"
+}
+```
+
+## 🛠️ Tech Stack
+
+- **Backend**: FastAPI, Python, Gemini API
+- **Frontend**: React, Vite, Tailwind CSS
+- **Extension**: Chrome Extension manifest v3
+- **NLP**: NLI model for claim verification
+
+## 📝 Quick Start
+
+### Prerequisites
+1. Clone repo
+2. Add `GEMINI_API_KEY` to `.env` in python_backend
+3. Run both servers
+4. Visit http://localhost:5173
 - **Firebase** - Optional data persistence
 
 ### Frontend
@@ -248,14 +148,10 @@ USE_MOCK=false  # Set to true to use mock data instead of Gemini
 4. Push to branch (`git push origin feature/improvement`)
 5. Open a Pull Request
 
-## 📄 License
+## � Team
 
-MIT License - see LICENSE file for details
+Made for the Hackathon 🚀
 
-## 🙋 Support
+## 📝 License
 
-For issues, questions, or suggestions, please open an issue on GitHub.
-
----
-
-**Built with ⚡ for detecting AI hallucinations in real-time**
+MIT
