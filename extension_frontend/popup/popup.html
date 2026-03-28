@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TruthLens - Hallucination Detector</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo">🧠 TruthLens</div>
+      <div class="subtitle">AI Hallucination Detector</div>
+    </div>
+
+    <!-- Status -->
+    <div class="status-section">
+      <div class="status-item">
+        <span class="status-label">Backend:</span>
+        <span class="status-value" id="backendStatus">Checking...</span>
+      </div>
+      <div class="status-item">
+        <span class="status-label">Mode:</span>
+        <span class="status-value">Mock (Fast)</span>
+      </div>
+    </div>
+
+    <!-- Main Info -->
+    <div class="info-section">
+      <div class="info-title">How to Use</div>
+      <ol class="info-list">
+        <li>Select text on any webpage</li>
+        <li>Right-click → "Analyze with TruthLens"</li>
+        <li>Or press <kbd>Ctrl+Shift+T</kbd></li>
+        <li>See verdict in real-time overlay</li>
+      </ol>
+    </div>
+
+    <!-- Recent Scans -->
+    <div class="scans-section">
+      <div class="scans-title">Recent Scans</div>
+      <div id="scansList" class="scans-list">
+        <div class="no-scans">No scans yet</div>
+      </div>
+    </div>
+
+    <!-- Open Dashboard Button -->
+    <button id="openDashboard" class="btn-primary">
+      📊 Open Dashboard
+    </button>
+
+    <!-- Clear History Button -->
+    <button id="clearHistory" class="btn-secondary">
+      🗑️ Clear History
+    </button>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div class="footer-text">v1.0.0 • Built for Hackathon</div>
+      <a href="http://localhost:5179" target="_blank" class="footer-link">Dashboard</a>
+      <a href="http://localhost:8000/docs" target="_blank" class="footer-link">API</a>
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "TruthLens - AI Hallucination Detector",
+  "version": "1.0.0",
+  "description": "Detect AI hallucinations in real-time with self-interrogation analysis",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "TruthLens - Detect Hallucinations"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>",
+        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
+        "https://claude.ai/*",
+        "https://gemini.google.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "commands": {
+    "trigger-scan": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+T",
+        "mac": "Command+Shift+V"
+      },
+      "description": "Analyze selected text with TruthLens"
+    }
+  },
+  "web_accessible_resources": []
+}
